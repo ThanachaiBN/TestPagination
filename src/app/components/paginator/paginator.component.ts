@@ -12,7 +12,7 @@ export class PaginatorComponent implements OnInit {
   seletePageNo = 1;
   pageSize = [10, 15, 20] //จำนวนข้อมูลใน 1 page
   pageNumber: number = 20; //จำนวนหน้า
-  seletePageSize: number = this.pageSize[0];
+  seletePageSize: number = this.pageSize[0]; //เก็บค่าPageSize เริ่มต้นให้เท่ากับ 10
   numberArray: any = [];
   maxPageNumber: number = 5; //เลขจำนวนหน้าที่ให้เลิอก
   nextPageNumber: number = 1;
@@ -34,19 +34,19 @@ export class PaginatorComponent implements OnInit {
   //   this.onPageEvent(pageSize)
   // }
 
-  plusPage(): void {
+  plusPage(): void { //กดเลื่อนไปด้ายขวา
     if (this.seletePageNo < this.pageNumber) {
       this.seletePageNo = this.seletePageNo + 1;
 
       // console.log(this.seletePageNo)
       if (this.seletePageNo >= this.maxPageNumber) {
-        this.statusPage = true
+        this.statusPage = true //เช็ตเพื่อกำหนดเเสดงเครื่องหมาย ...
       }
     } else {
       console.log(this.seletePageNo)
     }
 
-    if (this.seletePageNo > this.maxPageNumber && this.nextPageNumber <= this.pageNumber - 6) {
+    if (this.seletePageNo > this.maxPageNumber && this.nextPageNumber <= this.pageNumber - 6 ) {
       this.nextPageNumber++
       console.log(this.nextPageNumber)
     }
@@ -54,12 +54,12 @@ export class PaginatorComponent implements OnInit {
     this.onPageEvent(this.seletePageSize);
   }
 
-  minusPage(): void {
+  minusPage(): void { //กดเลื่อนไปด้านซ้าย
     if (this.seletePageNo > 1) {
       this.seletePageNo = this.seletePageNo - 1;
       console.log(this.seletePageNo)
       if (this.seletePageNo <= 2) {
-        this.statusPage = false
+        this.statusPage = false //เช็ตเพื่อกำหนดเเสดงเครื่องหมาย ...
 
         console.log(this.nextPageNumber)
       }
@@ -67,8 +67,7 @@ export class PaginatorComponent implements OnInit {
       console.log(this.seletePageNo)
     }
     this.onPageEvent(this.seletePageSize);
-    // && this.nextPageNumber >= 0
-    if (this.seletePageNo <= this.pageNumber - 4) {
+    if (this.seletePageNo <= this.pageNumber-this.maxPageNumber +1  && this.nextPageNumber > 0) {
       this.nextPageNumber--
     }
   }
@@ -85,20 +84,16 @@ export class PaginatorComponent implements OnInit {
   }
 
   calculateMaxPageNumber(): void {
-    // const pageNumber = this.pageNumber
-    // const maxPageNumber = 5
-    // let resultItem = document.items;
-    // let items = [];
-
-    for (let number = 1; number <= this.maxPageNumber; number++) { // iteration over input
-      console.log(number)
-      var result = Array({ number })//.fill(i);;
-      this.numberArray = this.numberArray.concat(result)
-      console.log(this.numberArray)
+    //คำควณเพื่อเเสดงตัวเลขในเเถบเมนู
+    for (let number = 1; number <= this.maxPageNumber; number++) { 
+      console.log(number);
+      var result = Array({ number });//.fill(i);;
+      this.numberArray = this.numberArray.concat(result);
+      console.log(this.numberArray);
     }
   }
 
-  clickPageNo(seletePageNo: any) {
+  clickPageNo(seletePageNo: number):void {
     this.seletePageNo = seletePageNo
     this.onPageEvent(this.seletePageSize);
   }

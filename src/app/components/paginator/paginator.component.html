@@ -35,7 +35,6 @@
                 >
                     {{item}}
                 </mat-option>
-                
             </mat-select>
         </mat-form-field>
     <!-- </div> -->
@@ -56,24 +55,22 @@
                 <div (click)="clickPageNo(item.number)" *ngIf="statusPage === false "> 
                     {{item.number}} 
                 </div>
-                    <div (click)="clickPageNo(item.number+nextPageNumber)" 
-                        *ngIf="item.number+nextPageNumber >= 1 && 
-                        statusPage === true && 
-                        item.number+nextPageNumber <= pageNumber"
-                    >
-                        {{item.number+nextPageNumber}} 
-                    </div>
+                <div (click)="clickPageNo(item.number+nextPageNumber)" 
+                    *ngIf="item.number+nextPageNumber > 1 && 
+                    statusPage === true && 
+                    item.number+nextPageNumber <= pageNumber"
+                >
+                    {{item.number+nextPageNumber}} 
+                </div>
             </div>
         </button>
       
         <!-- <button  mat-icon-button > -->
         <div  *ngIf="seletePageNo <= maxPageNumber && statusPage === false " > .... </div>
         <!-- </button> -->
-
         <mat-icon (click)="plusPage()">arrow_right</mat-icon>
  
     </div>
-
 
 </div>
 
