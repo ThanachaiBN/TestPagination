@@ -42,12 +42,16 @@
 
     
     <div class="flex  basis-1/5 items-center" style="background-color: rgb(207, 207, 207)">
-        <mat-icon (click)="minusPage()" >
+        <mat-icon *ngIf="statusBackPage"  (click)="plusMinusPage(false)" >
+            arrow_left
+        </mat-icon>
+
+        <mat-icon  *ngIf="!statusBackPage"  style="opacity: 0.4;">
             arrow_left
         </mat-icon>
         
         <!-- <button  mat-icon-button > -->
-        <div *ngIf=" statusPage === true" > .... </div>
+        <div *ngIf="statusPage === true" > .... </div>
         <!-- </button> -->
 
         <button *ngFor="let item of numberArray; let i = index" mat-icon-button>
@@ -60,6 +64,7 @@
                     statusPage === true && 
                     item.number+nextPageNumber <= pageNumber"
                 >
+                    <!-- {{nextPageNumber}} -->
                     {{item.number+nextPageNumber}} 
                 </div>
             </div>
@@ -68,7 +73,8 @@
         <!-- <button  mat-icon-button > -->
         <div  *ngIf="seletePageNo <= maxPageNumber && statusPage === false " > .... </div>
         <!-- </button> -->
-        <mat-icon (click)="plusPage()">arrow_right</mat-icon>
+        <mat-icon *ngIf="statusNextPage" (click)="plusMinusPage(true)">arrow_right</mat-icon>
+        <mat-icon *ngIf="!statusNextPage"  style="opacity: 0.4;">arrow_right</mat-icon>
  
     </div>
 

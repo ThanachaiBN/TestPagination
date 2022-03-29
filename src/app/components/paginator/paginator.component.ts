@@ -7,7 +7,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class PaginatorComponent implements OnInit {
   @Output() onPageEventChanged: EventEmitter<any> = new EventEmitter();
-
+  statusNextPage: boolean = true;
+  statusBackPage: boolean = false;
+  // test:boolean = true;
   statusPage: boolean = false;
   seletePageNo = 1;
   pageSize = [10, 15, 20] //จำนวนข้อมูลใน 1 page
@@ -24,6 +26,24 @@ export class PaginatorComponent implements OnInit {
     // this.test();
   }
 
+  plusMinusPage(plus: boolean){
+    console.log(this.seletePageNo)
+    if(plus){
+      this.statusBackPage = true
+      this.plusPage();
+      if(this.pageNumber === this.seletePageNo){
+        this.statusNextPage = false 
+      }
+    }else{
+      this.minusPage();
+      this.statusNextPage = true 
+      if(this.seletePageNo === 1){
+        this.statusBackPage = false 
+      }
+    }
+    // this.statusNextPage = true;
+    // this.statusNextPage = false;
+  }
   // counter(i: number) {
   //   return new Array(i);
   //   // console.log(this.test)
@@ -35,45 +55,54 @@ export class PaginatorComponent implements OnInit {
   // }
 
   plusPage(): void { //กดเลื่อนไปด้ายขวา
+    const numberArray = this.numberArray[this.maxPageNumber-1].number + this.nextPageNumber //
+
     if (this.seletePageNo < this.pageNumber) {
       this.seletePageNo = this.seletePageNo + 1;
 
       // console.log(this.seletePageNo)
       if (this.seletePageNo >= this.maxPageNumber) {
-        this.statusPage = true //เช็ตเพื่อกำหนดเเสดงเครื่องหมาย ...
+        this.statusPage = true; //เช็ตเพื่อกำหนดเเสดงเครื่องหมาย ...
       }
     } else {
-      console.log(this.seletePageNo)
+      console.log(this.seletePageNo);
     }
 
-    if (this.seletePageNo > this.maxPageNumber && this.nextPageNumber <= this.pageNumber - 6 ) {
-      this.nextPageNumber++
-      console.log(this.nextPageNumber)
+    if (this.seletePageNo > this.maxPageNumber && this.nextPageNumber <= this.pageNumber - 6 
+      && this.seletePageNo === numberArray) {
+      this.nextPageNumber++;
+      // this.statusPage = true 
+      console.log(this.nextPageNumber);
+
     }
 
     this.onPageEvent(this.seletePageSize);
   }
 
   minusPage(): void { //กดเลื่อนไปด้านซ้าย
+
     if (this.seletePageNo > 1) {
       this.seletePageNo = this.seletePageNo - 1;
-      console.log(this.seletePageNo)
+      console.log(this.seletePageNo);
       if (this.seletePageNo <= 2) {
-        this.statusPage = false //เช็ตเพื่อกำหนดเเสดงเครื่องหมาย ...
+        this.statusPage = false; //เช็ตเพื่อกำหนดเเสดงเครื่องหมาย ...
 
-        console.log(this.nextPageNumber)
+        console.log(this.nextPageNumber);
       }
     } else {
-      console.log(this.seletePageNo)
+      console.log(this.seletePageNo);
     }
     this.onPageEvent(this.seletePageSize);
-    if (this.seletePageNo <= this.pageNumber-this.maxPageNumber +1  && this.nextPageNumber > 0) {
-      this.nextPageNumber--
+    if (this.seletePageNo <= this.pageNumber-this.maxPageNumber +1  && this.nextPageNumber > 1 
+        && this.seletePageNo === this.numberArray[0].number + this.nextPageNumber) {
+      // && this.seletePageNo === this.numberArray[0] + this.nextPageNumber
+      // console.log(this.numberArray[0].number + this.nextPageNumber)
+      this.nextPageNumber--;
     }
   }
 
   onPageEvent(pageSize: number): void {
-    this.seletePageSize = pageSize
+    this.seletePageSize = pageSize;
     const page = {
       pageIndex: this.seletePageNo,
       pageSize: this.seletePageSize
@@ -93,7 +122,20 @@ export class PaginatorComponent implements OnInit {
     }
   }
 
-  clickPageNo(seletePageNo: number):void {
+  clickPageNo(seletePageNo: number): void {
+    if(seletePageNo > 1 ){
+      
+      this.statusBackPage = true
+    }else{
+      this.statusBackPage = false
+    }
+
+    if(seletePageNo < this.pageNumber){
+      this.statusNextPage = true
+    }else{
+      this.statusNextPage = false
+    }
+
     this.seletePageNo = seletePageNo
     this.onPageEvent(this.seletePageSize);
   }

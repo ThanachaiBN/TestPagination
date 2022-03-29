@@ -1,0 +1,8 @@
+
+<div class="flex flex-row flex-wrap" >
+    <div *ngFor="let item of data" class="mx-2 my-2 w-1/6">
+        <button (click)="onClick(item)" class="w-full" mat-raised-button>
+            {{item.name}} ({{item.total}})
+        </button>
+    </div>
+</div>

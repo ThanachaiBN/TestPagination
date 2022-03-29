@@ -1,4 +1,17 @@
-<!-- <p>home works!</p> -->
+<!-- <p>home works!</p>[formula]="document" -->
+
+<app-filter-button
+    [data]="dataButton"
+    (seleted)="seleted($event)"
+>
+</app-filter-button>
+
+<app-status-icons
+    [data]="dataIcons"
+>    
+</app-status-icons>
+
 <app-paginator 
-(onPageEventChanged)="onPageEventChanged($event)"
-></app-paginator>
+    (onPageEventChanged)="onPageEventChanged($event)"
+>
+</app-paginator>
